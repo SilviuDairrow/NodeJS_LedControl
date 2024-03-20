@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LED CONTROL</title>
+</head>
+
+<body style="background-color: black;">
+    <h1 style="color: aquamarine;">LED CONTROL </h1>
+
+    <button onclick="toggleLED()">OPEN THE LIGHT EMITTING DIODE</button>
+
+    <br />
+
+    <label for="numarInput" style="color: aquamarine;">Introdu un numar: </label>
+    <input type="text" id="numarInput" placeholder="Introdu un numar">
+
+    <button onclick="NumberToLed()">Buton countdown interval </button>
+
+    <script>
+        async function toggleLED() {
+            const response = await fetch('http://192.168.137.243:3000/toggle', { method: 'POST' });
+            const result = await response.json();
+            console.log(result);
+        }
+        async function NumberToLed() {
+            const numarInput = document.getElementById('numarInput').value;
+            const response = await fetch('http://192.168.137.243:3000/Countdown',
+                {
+                    method: 'POST',
+                    headers:
+                    {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify
+                        (
+                            {
+                                number: numarInput,
+                            }
+                        ),
+                });
+            const result = await response.json();
+            console.log(result);
+        }
+    </script>
+</body>
+
+</html>
